@@ -4,7 +4,7 @@
 \alias{get_batch_filenames}
 \title{Get path to all batch files in the batches folder}
 \usage{
-get_batch_filenames(path = "./batches/")
+get_batch_filenames(path = "../batches/")
 }
 \arguments{
 \item{path}{Path to the folder containing batch.yaml files.}

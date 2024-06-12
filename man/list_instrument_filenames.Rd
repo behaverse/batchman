@@ -4,7 +4,11 @@
 \alias{list_instrument_filenames}
 \title{List filenames containing a specific word.}
 \usage{
-list_instrument_filenames(dataset_name, contains_term)
+list_instrument_filenames(
+  dataset_name,
+  contains_term,
+  dataset_path = "../data/"
+)
 }
 \arguments{
 \item{dataset_name}{The name of the dataset folder in which to search for files. It is assumed that this folder is inside the `data` folder in the project root folder.}

@@ -4,7 +4,7 @@
 \alias{new_batch}
 \title{Create new batch file (boilerplate)}
 \usage{
-new_batch(batch_name)
+new_batch(batch_name, path = "../")
 }
 \arguments{
 \item{batch_name}{the name of the process to be created. Determines the name of the yaml file to be created.}

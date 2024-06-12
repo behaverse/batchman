@@ -4,7 +4,7 @@
 \alias{start_batchman}
 \title{Create folders to contain batch and process files}
 \usage{
-start_batchman(output_dir = "./")
+start_batchman(output_dir = "../")
 }
 \arguments{
 \item{output_dir}{Path to output/project folder}
@@ -16,5 +16,5 @@ None
 Create folders to contain batch and process files
 }
 \examples{
-start_batchman(output_dir = './')
+start_batchman(output_dir = '../')
 }

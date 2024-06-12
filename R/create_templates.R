@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples new_process("demo")
-new_process <- function(process_name = "process_name") {
+new_process <- function(process_name = "process_name", path = '../') {
 
   # ---- define template ----
   text <- paste0('
@@ -92,7 +92,7 @@ However, we used responses options that ranged from 1 to 7 rather than from 1 to
   ## load the data from one participant...
   # df <- readr::read_csv("./data/P500-L1m/subject_001/session_06/x_bisbas_v2021.03/response_1.csv")
   ## save that data as a data sample
-  data_sample_filename <- "./processes/', process_name, '.RData"
+  data_sample_filename <- "', path, 'processes/', process_name, '.RData"
   # save(df, file = data_sample_filename)
 
   # load data and return data sample
@@ -105,7 +105,7 @@ However, we used responses options that ranged from 1 to 7 rather than from 1 to
 ')
 
   # ---- create file ----
-  fileConn <- file(paste0("./processes/", process_name, ".R"))
+  fileConn <- file(paste0(path, "processes/", process_name, ".R"))
   writeLines(text, fileConn)
   close(fileConn)
 
@@ -123,7 +123,7 @@ However, we used responses options that ranged from 1 to 7 rather than from 1 to
 #' @export
 #'
 #' @examples new_batch("demo")
-new_batch <- function(batch_name) {
+new_batch <- function(batch_name, path = '../') {
 
   # ---- define template ----
   text <- '
@@ -135,7 +135,7 @@ source: list_instrument_filenames(dataset, "my_instrument_name")
 '
 
   # ---- create file ----
-  fileConn <- file(paste0("./batches/", batch_name, ".yaml"))
+  fileConn <- file(paste0(path, "batches/", batch_name, ".yaml"))
   writeLines(text, fileConn)
   close(fileConn)
 

@@ -4,7 +4,7 @@
 \alias{new_process}
 \title{Create new process file (boilerplate)}
 \usage{
-new_process(process_name = "process_name")
+new_process(process_name = "process_name", path = "../")
 }
 \arguments{
 \item{process_name}{the name of the process to be created. Determines the name of the R file and the name of its functions.}

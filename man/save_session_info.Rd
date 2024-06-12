@@ -4,7 +4,7 @@
 \alias{save_session_info}
 \title{Save information about platform and packages used during session}
 \usage{
-save_session_info(output_dir = "./")
+save_session_info(output_dir = "../")
 }
 \arguments{
 \item{output_dir}{path to directory in which to save the session info.}

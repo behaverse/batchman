@@ -8,8 +8,8 @@
 #' @return None
 #' @export
 #'
-#' @examples start_batchman(output_dir = './')
-start_batchman <- function(output_dir = './'){
+#' @examples start_batchman(output_dir = '../')
+start_batchman <- function(output_dir = '../'){
   dir.create(paste0(output_dir, 'batches'), showWarnings = FALSE, recursive = TRUE)
   dir.create(paste0(output_dir, 'processes'), showWarnings = FALSE, recursive = TRUE)
 }
@@ -68,6 +68,8 @@ update_registry <- function(registry_filename, source_filenames, keys, values){
   # save data
   readr::write_csv(registry, registry_filename)
 
+
+
 }
 
 
@@ -113,21 +115,31 @@ select_process <- function(registry_filename, batch_size = 3){
 process_wrapper <- function(filename, process_name, output_dir) {
 
   # load file
-  input_data <- read.csv(filename)
+  response_data <- read.csv(filename)
+  option_data <- read.csv(stringr::str_replace(filename, "/response", "/option"))
 
   # start timer
   start_date <- now()
 
   # run process
-  df <- eval(parse(text = paste0(process_name, ".process(input_data)")))
+  df <- eval(parse(text = paste0(process_name, ".process(response_data, option_data)")))
 
   # measure duration
   duration <- as.numeric(difftime(now(), start_date, units = "secs"))
 
   # did it complete correctly?
+  df <- df |>
+    mutate(.duration = duration,
+           .datetime = start_date,
+           .process = paste0(process_name, ".process()"),
+           .process_hash = substr(digest::digest(
+             eval(parse(text = paste0(process_name, ".process"))),
+                                                 algo = 'sha1'),1, 6),
+           .file = filename)
 
   # save output to file
-  readr::write_csv(x = df, file = paste0(output_dir, '/output.csv'), append = TRUE)
+  append_csv(x = df, file = paste0(output_dir, '/output.csv'))
+
 
   # update registry (set status to "done")
   registry_filename <- paste0(output_dir, '/registry.csv')
@@ -157,7 +169,7 @@ run_batch <- function(batch_filename, batch_size = 100) {
   process_name <- dfy$process
 
   # source the process
-  source(file = paste0('./processes/', process_name, '.R'),
+  source(file = paste0('../processes/', process_name, '.R'),
          verbose = FALSE)
 
   output_dir <- paste0(dfy$output_dir, dfy$name, '/')
@@ -284,7 +296,7 @@ initialize_batch <- function(batch_filename, update_mode = 'update'){
 #' @export
 #'
 #' @examples get_batch_filenames()
-get_batch_filenames <- function(path = './batches/'){
+get_batch_filenames <- function(path = '../batches/'){
   list.files(path = path,
              pattern = '.yaml',
              full.names = TRUE)

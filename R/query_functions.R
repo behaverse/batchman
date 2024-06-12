@@ -12,17 +12,17 @@
 #' @export
 #'
 #' @examples list_instrument_filenames()
-list_instrument_filenames <- function(dataset_name, contains_term){
+list_instrument_filenames <- function(dataset_name, contains_term, dataset_path = '../data/'){
 
   # takes quite some time to list all files:
-  source_files <- list.files(path = paste0('./data/', dataset_name, '/'),
+  source_files <- list.files(path = paste0(dataset_path, dataset_name, '/'),
                              pattern = '.*response_\\d.csv$',
                              recursive = TRUE)
 
 
   # can't get regex to work in one step...
   idx <- stringr::str_detect(source_files, pattern = contains_term)
-  paste0('./data/', dataset_name, '/', source_files[idx])
+  paste0(dataset_path, dataset_name, '/', source_files[idx])
 
 }
 
